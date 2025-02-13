@@ -86,6 +86,14 @@ export default function Login() {
             </span>
           </div>
 
+          {/* Forgot Password Link */}
+          <div className="w-[320px] text-right mt-2">
+            <Link href="/components/Auth" className="text-[#1E58BD] font-semibold cursor-pointer">
+              Lupa Password?
+            </Link>
+          </div>
+          <br/>
+
           {/* Login Button */}
           <div className="text-center">
             <button type="submit" className="bg-[#252525] text-[#7994BC] rounded-md px-12 py-3 shadow-lg cursor-pointer text-[20px] font-semibold">
