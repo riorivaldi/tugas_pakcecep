@@ -110,18 +110,6 @@ export default function Login() {
             </span>
           </div>
 
-          {/* Forgot Password Link */}
-          <div className="w-[320px] text-right mt-2">
-            <span
-              className="text-[#1E58BD] font-semibold cursor-pointer"
-              onClick={() => router.push("/auths/forgot-password")}
-            >
-              Lupa Password?
-            </span>
-          </div>
-
-          <br />
-
           {/* Login Button */}
           <div className="text-center">
             <button
