@@ -1,5 +1,6 @@
 import React from "react";
-import Loading from "./components/loading/page";
+import Loading from "../components/loading/page";
+// import auths from "../components/auths/register"
 
 
 export default function Page() {
