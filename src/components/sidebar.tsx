@@ -36,7 +36,7 @@ export default function Sidebar() {
   };
 
   const handleGoBack = () => {
-    router.push("components/loading");
+    router.push("/");
   };
 
   return (
