@@ -1,23 +1,34 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Sidebar from "@/components/sidebar";
+import { getClasses } from "@/app/services/buat-kelas/get_kelas";
 
 export default function Page() {
-  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [classes, setClasses] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Daftar tugas yang bisa diubah sesuai dengan data nyata
-  const tasks = [
-    { id: 1, title: "Tugas 1", description: "Deskripsi tugas pertama." },
-    { id: 2, title: "Tugas 2", description: "Deskripsi tugas kedua." },
-    { id: 3, title: "Tugas 3", description: "Deskripsi tugas ketiga." },
-  ];
+  useEffect(() => {
+    const fetchClasses = async () => {
+      try {
+        const data = await getClasses();
+        setClasses(Array.isArray(data) ? data : []);
+      } catch (err) {
+        setError("Gagal mengambil data kelas.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchClasses();
+  }, []);
 
-  // Filter tugas berdasarkan query pencarian
-  const filteredTasks = tasks.filter(
-    (task) =>
-      task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      task.description.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredClasses = classes.filter(
+    (kelas) =>
+      kelas?.nama_kelas?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      kelas?.nama_guru?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      kelas?.matapelajaran?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
@@ -43,23 +54,27 @@ export default function Page() {
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Cari tugas..."
+            placeholder="Cari kelas..."
             className="w-full pl-4 pr-4 py-2 rounded-xl border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
         <div className="flex flex-col gap-6 mt-6 ml-10 relative z-10 max-w-lg">
-          {/* Daftar tugas yang difilter */}
-          {filteredTasks.length === 0 ? (
-            <p className="text-white">Tidak ada tugas yang ditemukan.</p>
+          {loading ? (
+            <p className="text-white">Memuat data kelas...</p>
+          ) : error ? (
+            <p className="text-red-500">{error}</p>
+          ) : filteredClasses.length === 0 ? (
+            <p className="text-white">Tidak ada kelas yang ditemukan.</p>
           ) : (
-            filteredTasks.map((task) => (
+            filteredClasses.map((buat_kelas) => (
               <div
-                key={task.id}
+                key={buat_kelas.id || Math.random()}
                 className="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition"
               >
-                <h3 className="text-xl font-bold">{task.title}</h3>
-                <p className="text-gray-600 mt-2">{task.description}</p>
+                <h3 className="text-xl font-bold">{buat_kelas.nama_kelas || "Nama tidak tersedia"}</h3>
+                <h3 className="text-xl font-bold">{buat_kelas.matapelajaran || "Guru tidak tersedia"}</h3>
+                <p className="text-gray-600 mt-2">{buat_kelas.nama_guru || "Mata pelajaran tidak tersedia"}</p>
               </div>
             ))
           )}

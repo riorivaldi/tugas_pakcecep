@@ -80,7 +80,7 @@ export default function Page() {
           <div className="absolute bottom-24 right-10 bg-white p-4 rounded-lg shadow-lg w-60 border">
             <h3 className="text-lg font-semibold text-center mb-3">Pilih Opsi</h3>
             <button
-              onClick={() => setShowPopup(false)}
+              onClick={() => router.push("/dashboard/gabung-kelas")}
               className="w-full bg-gray-300 p-2 rounded-md mb-2 text-center text-sm"
             >
               Gabung Kelas
