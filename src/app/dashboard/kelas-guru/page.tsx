@@ -3,7 +3,8 @@ import React, { useEffect, useState } from "react";
 import { FaPlus, FaTimes } from "react-icons/fa";
 import { getClasses } from "@/app/services/buat-kelas/get_kelas";
 import { uploadtugas } from "@/app/services/Upload-tugas/upload";
-import { getAllTugas } from "@/app/services/Upload-tugas/get_upload"; // Import fungsi GET
+import { getAllTugas } from "@/app/services/Upload-tugas/get_upload";
+import { FaCopy } from "react-icons/fa"; 
 
 export default function Dashboard() {
     const [buat_kelas, setKelas] = useState<{ nama_kelas: string; matapelajaran: string } | null>(null);
@@ -103,21 +104,28 @@ export default function Dashboard() {
             </div>
             <br />
 
-            {/* Daftar Tugas */}
-            <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition w-[100%] min-h-[260px] mx-auto">
-                <h3 className="text-black font-bold mb-4">Daftar Tugas</h3>
-                {tasks.length > 0 ? (
-                    tasks.map((task) => (
-                        <div key={task.id} className="bg-gray-100 p-4 rounded-lg mb-3 shadow">
-                            <h4 className="text-black font-semibold">{task.title}</h4>
-                            <p className="text-gray-700">{task.deskripsi}</p>
-                            {task.fileName && <p className="text-gray-500 text-sm">Lampiran: {task.fileName}</p>}
-                        </div>
-                    ))
-                ) : (
-                    <p className="text-gray-500">Belum ada tugas.</p>
+           {/* Daftar Tugas */}
+<div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition w-[100%] min-h-[260px] mx-auto">
+    <h3 className="text-black font-bold mb-4">Daftar Tugas</h3>
+    {tasks.length > 0 ? (
+        tasks.map((task) => (
+            <div key={task.id} className="bg-gray-100 p-4 rounded-lg mb-3 shadow">
+                <h4 className="text-black font-semibold">{task.title}</h4>
+                <p className="text-gray-700">{task.deskripsi}</p>
+                {task.fileName && (
+                 <img 
+                    src={task.fileName.startsWith("http") ? task.fileName : `http://localhost:8000/storage/uploads/tugas/${task.fileName}`} 
+                    alt="Lampiran tugas" 
+                    className="mt-2 w-full max-w-[150px] h-auto rounded-lg shadow-md"
+                />
                 )}
             </div>
+        ))
+    ) : (
+        <p className="text-gray-500">Belum ada tugas.</p>
+    )}
+</div>
+
 
             {/* Tombol Tambah */}
             <button

@@ -5,6 +5,8 @@ import Image from "next/image";
 import Sidebar from "@/components/sidebar";
 import { useRouter } from "next/navigation";
 import { getClasses } from "@/app/services/buat-kelas/get_kelas";
+import { createClass } from "@/app/services/buat-kelas/Create_kelas";
+
 
 export default function Page() {
   const [showPopup, setShowPopup] = useState(false);
@@ -47,19 +49,23 @@ export default function Page() {
         <h2 className="text-white text-xl font-semibold mt-20 ml-10 relative z-10">
           DAFTAR KELAS ANDA
         </h2>
-        <div className="flex flex-col gap-6 mt-6 ml-10 relative z-10 max-w-lg">
-  {classes.length > 0 ? (
-    classes.map((buat_kelas) => (
-      <div key={buat_kelas.id} className="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition">
-        <h3 className="text-xl font-bold">{buat_kelas.nama_kelas}</h3>
-        <p className="text-gray-600 mt-1">Mata Pelajaran: {buat_kelas.matapelajaran}</p>
-        <p className="text-gray-500 mt-1">Guru: {buat_kelas.nama_guru}</p>
-      </div>
-    ))
-  ) : (
-    <p className="text-white">Belum ada kelas tersedia.</p>
-  )}
-</div>
+    <div className="flex flex-col gap-6 mt-6 ml-10 relative z-10 max-w-lg">
+            {classes.length > 0 ? (
+                classes.map((buat_kelas) => (
+                    <div 
+                        key={buat_kelas.id} 
+                        className="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition cursor-pointer"
+                        onClick={() => router.push(`/dashboard/kelas-guru/`)} // Navigasi sesuai ID kelas
+                    >
+                        <h3 className="text-xl font-bold">{buat_kelas.nama_kelas}</h3>
+                        <p className="text-gray-600 mt-1">Mata Pelajaran: {buat_kelas.matapelajaran}</p>
+                        <p className="text-gray-500 mt-1">Guru: {buat_kelas.nama_guru}</p>
+                    </div>
+                ))
+            ) : (
+                <p className="text-white">Belum ada kelas tersedia.</p>
+            )}
+        </div>
 
 
         {/* Tombol Tambah */}

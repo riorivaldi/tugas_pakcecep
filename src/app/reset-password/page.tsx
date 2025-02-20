@@ -1,8 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import api from "../services/api"; // Sesuaikan dengan struktur proyek
-
+import api from "../services/api";
 
 
 export default function ResetPassword() {
